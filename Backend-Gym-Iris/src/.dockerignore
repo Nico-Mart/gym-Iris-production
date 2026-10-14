@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+.user
+.suo
+.git
+.gitignore
+.DS_Store
+.env
+appsettings.Development.json
+README.md
