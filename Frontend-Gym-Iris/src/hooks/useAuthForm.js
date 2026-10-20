@@ -23,9 +23,12 @@ export const useAuthForm = ({ navigate } = {}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const mockToken = "mock-token-" + Date.now();
+
     saveUserSession({
       email,
       name: name || "Usuario",
+      token: mockToken,
     });
 
     if (navigate) {

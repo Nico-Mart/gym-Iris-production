@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "./components/pages/Home";
-import { Login } from "./components/pages/Login";
 import { Dashboard } from "./components/pages/Dashboard";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Admin } from "./components/pages/Admin";
@@ -15,15 +14,6 @@ const routes = [
       <>
         <Navbar />
         <Home />
-      </>
-    ),
-  },
-  {
-    path: "/login",
-    element: (
-      <>
-        <Navbar />
-        <Login />
       </>
     ),
   },

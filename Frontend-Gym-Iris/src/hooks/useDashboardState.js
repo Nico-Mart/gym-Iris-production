@@ -15,7 +15,7 @@ export const useDashboardState = ({ navigate } = {}) => {
 
   useEffect(() => {
     if (!user && navigate) {
-      navigate("/login");
+      navigate("/admin");
     }
   }, [navigate, user]);
 
@@ -23,7 +23,7 @@ export const useDashboardState = ({ navigate } = {}) => {
     clearUserSession();
 
     if (navigate) {
-      navigate("/");
+      navigate("/admin");
     }
   };
 

@@ -23,6 +23,7 @@ import {
   PauseCircle,
 } from "lucide-react";
 import { api } from "../../services/api.js";
+import { clearAuthSession } from "../../services/session/userSessionService";
 const USE_MOCK =
   String(import.meta.env.VITE_USE_MOCK_DATA || "false").toLowerCase() ===
   "true";
@@ -291,7 +292,10 @@ export function Admin() {
 
   const currentMonth = getCurrentMonthKey();
 
-  const handleLogout = () => navigate("/");
+  const handleLogout = () => {
+    clearAuthSession();
+    window.location.href = "/admin";
+  };
   const handleSelectActivity = (activity) => setSelectedActivity(activity);
 
   const handleAddMember = async () => {

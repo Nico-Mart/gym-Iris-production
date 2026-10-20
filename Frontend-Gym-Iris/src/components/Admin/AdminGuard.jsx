@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Lock, Eye, EyeOff, ShieldAlert } from "lucide-react";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api.js";
+import { clearAuthSession } from "../../services/session/userSessionService";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -15,11 +16,14 @@ export function AdminGuard({ children }) {
   const [error, setError] = useState("");
   const [shake, setShake] = useState(false);
 
+  useEffect(() => {
+    setAuthenticated(Boolean(localStorage.getItem("gym_iris_token")));
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await api.validateAdmin(password);
     if (result.isValid) {
-      // `api.validateAdmin` stores the token in localStorage when successful.
       setAuthenticated(Boolean(localStorage.getItem("gym_iris_token")));
       setError("");
     } else {
@@ -28,6 +32,11 @@ export function AdminGuard({ children }) {
       setPassword("");
       setTimeout(() => setShake(false), 500);
     }
+  };
+
+  const handleLogout = () => {
+    clearAuthSession();
+    setAuthenticated(false);
   };
 
   if (authenticated) return children;

@@ -1,8 +1,23 @@
+const TOKEN_STORAGE_KEY = "gym_iris_token";
 const USER_STORAGE_KEY = "user";
 
-export const saveUserSession = (user) => {
-  localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+export const saveAuthSession = ({ token, user }) => {
+  if (token) {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+  }
+
+  if (user) {
+    const { token: _token, ...userData } = user;
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+  }
 };
+
+export const saveUserSession = (user) => {
+  const { token, ...userData } = user ?? {};
+  saveAuthSession({ token, user: userData });
+};
+
+export const getAuthToken = () => localStorage.getItem(TOKEN_STORAGE_KEY);
 
 export const getUserSession = () => {
   const storedUser = localStorage.getItem(USER_STORAGE_KEY);
@@ -18,6 +33,14 @@ export const getUserSession = () => {
   }
 };
 
-export const clearUserSession = () => {
+export const isAuthenticated = () =>
+  Boolean(getAuthToken() || getUserSession());
+
+export const clearAuthSession = () => {
+  localStorage.removeItem(TOKEN_STORAGE_KEY);
   localStorage.removeItem(USER_STORAGE_KEY);
+};
+
+export const clearUserSession = () => {
+  clearAuthSession();
 };
